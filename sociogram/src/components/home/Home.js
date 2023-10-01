@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 // import "../components/home/Home.css"
+import signUpManager from '../managers/signUpManager'; 
 
 const Home=() =>{
 
@@ -24,6 +25,20 @@ const Home=() =>{
         SetAge(e.target.value)
     }
     const handleSubmit=()=>{
+        const data= {
+            "name":name,
+            "email":email,
+            "password":password,
+            "age":age
+        }
+        const response = signUpManager(data)
+        if(response.status == 200){
+            prompt("created")
+
+        }else{
+            console.log("signup failed")
+        }
+
         console.log("enter")
     }
 
@@ -36,23 +51,23 @@ const Home=() =>{
         <div className='form-container'>
         <form>
             <div>
-            <lable className="label">Name</lable>
+            <label className="label">Name</label>
                 <input onChange={handleName} className="input"value={name} type="text" />
             </div>
             <div>
-            <lable>Email</lable>
+            <label>Email</label>
                 <input onChange={handleEmail} className="input"value={email} type="email" />
             </div>
             <div>
-            <lable>Age</lable>
+            <label>Age</label>
                 <input onChange={handleAge} className="input"value={age} type="number" />
             </div>
             <div>
-            <lable>password</lable>
+            <label>password</label>
                 <input onChange={handlepassword} className="input"value={password} type="password" />
             </div>
             <div>
-            <lable>Confirm password</lable>
+            <label>Confirm password</label>
                 <input onChange={handleConfirmPassword} className="input"value={confirmPassword} type="password" />
             </div>
             <button onClick={handleSubmit} className="btn" type="submit">Submit</button>
