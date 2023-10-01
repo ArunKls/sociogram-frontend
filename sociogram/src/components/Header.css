@@ -1,0 +1,16 @@
+.dropdown-menu {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.navbar {
+    height: 50px !important;
+}
+
+.form-control {
+    height: 25px;
+}
+
+.dropdown-toggle {
+    height: 40px;
+}
