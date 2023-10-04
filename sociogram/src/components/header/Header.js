@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import loginManager from '../managers/loginManager';
+import loginManager from "../managers/loginManager";
 import {
   Navbar,
   Nav,
@@ -30,24 +30,21 @@ function Header() {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    var formData = new FormData();
-    const data= {
-      "username":username,
-      "password":password
+    const data = {
+      username: username,
+      password: password,
+    };
+    const response = await loginManager(data);
+    if (response.ok) {
+      alert("logged in");
+      const token = await response.json();
+      console.log("TOKEN", token);
+    } else {
+      console.log("login failed");
     }
-    formData.append("uswername", username);
-    formData.append("password", password);
-    formData.append("grant-type", "password")
-    const response = loginManager(formData)
-    if(response.status === 200){
-        prompt("logged in")
-
-    }else{
-        console.log("login failed")
-    }
-  }
+  };
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -104,7 +101,9 @@ function Header() {
                   />
                 </Col>
                 <Col xs="auto">
-                  <Button type="submit" onClick={handleSubmit}>Login</Button>
+                  <Button type="submit" onClick={handleSubmit}>
+                    Login
+                  </Button>
                 </Col>
               </Row>
             </Form>

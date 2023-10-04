@@ -1,19 +1,17 @@
-const loginManager = async (formData) => {
-  const sparamdata = new URLSearchParams(formData);
-  const response = await fetch("http://192.168.1.135:8000/signup", {
+const loginManager = async (data) => {
+  const formData = new FormData();
+  formData.append("username", data["username"]);
+  formData.append("password", data["password"]);
+  const d = new URLSearchParams(formData);
+  const response = await fetch("http://192.168.1.135:8000/login", {
     method: "POST",
-    body: formData,
-    //   body: JSON.stringify({
-    //         "username":formData['username'],
-    //         "password":formData['password'],
-    //         "grant_type":"password"
-    //   }),
+    body: d,
     headers: {
-      "Content-type": "application/json",
+      "Content-type": "application/x-www-form-urlencoded",
     },
   });
-  const data1 = await response.json();
-  return data1;
+
+  return response;
 };
 
 export default loginManager;
