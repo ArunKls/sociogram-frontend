@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import loginManager from "../managers/loginManager";
+import { COOKIES } from "../../constants/constants";
+
 import {
   Navbar,
   Nav,
@@ -14,7 +16,7 @@ import {
 import "./Header.css";
 
 function isLogIn() {
-  return sessionStorage.getItem("token") !== null;
+  return COOKIES.get("access_token") === null;
 }
 
 function Header() {
@@ -41,6 +43,9 @@ function Header() {
       alert("logged in");
       const token = await response.json();
       console.log("TOKEN", token);
+      // sessionStorage.setItem("token", token);
+      setIsLoggedIn();
+      COOKIES.set("access_token", token.access_token);
     } else {
       console.log("login failed");
     }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import postManager from "../managers/postManager";
+import addPost from "../managers/postManager";
 
 const Post = () => {
   const [description, setDescription] = useState("");
@@ -12,12 +12,13 @@ const Post = () => {
   const handleDescription = (e) => {
     setDescription(e.target.value);
   };
-  const handleSubmit = (description) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const data= {
         "description":description,
         "file":selectedFile
     }
-    const response = postManager(data)
+    const response = addPost(data)
     if(response.status === 200){
         prompt("created")
 

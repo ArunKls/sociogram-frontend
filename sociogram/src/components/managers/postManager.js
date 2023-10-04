@@ -1,17 +1,21 @@
 import { Web3Storage } from 'web3.storage'
-
+import { BASE_URL, COOKIES } from '../../constants/constants';
 const addPost = async(data) => {
+
     
-    const response = await fetch('http://192.168.1.135:8000/post', {
+    
+    const response = await fetch(BASE_URL+'/post', {
       method: 'POST',
       body: JSON.stringify({
           description: data['description']
       }),
        headers: {
           'Content-type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer '+COOKIES.get("access_token")
       },
     });
     const data1 = await response.json();
+    console.log(data1);
 }
 
 function getAccessToken () {

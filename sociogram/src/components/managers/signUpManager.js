@@ -1,8 +1,9 @@
 import { Web3Storage } from 'web3.storage'
+import { BASE_URL } from '../../constants/constants';
 
 const signUpManager = async(data) => {
 
-    const response = await fetch('http://192.168.1.135:8000/signup', {
+    const response = await fetch(BASE_URL+'/signup', {
       method: 'POST',
       body: JSON.stringify({
             "name":data['name'],
