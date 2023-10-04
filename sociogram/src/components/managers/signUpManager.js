@@ -1,7 +1,7 @@
+import { Web3Storage } from 'web3.storage'
+
 const signUpManager = async(data) => {
 
-    console.log("enetered into sungup",data)
-    debugger
     const response = await fetch('http://192.168.1.135:8000/signup', {
       method: 'POST',
       body: JSON.stringify({
@@ -17,5 +17,23 @@ const signUpManager = async(data) => {
     const data1 = await response.json();
     return data1
 }
+
+function getAccessToken () {
+  return process.env.WEB3
+}
+
+
+function makeStorageClient () {
+  return new Web3Storage({ token: getAccessToken() })
+}
+
+async function storeFiles (files) {
+  const client = makeStorageClient()
+  const cid = await client.put(files)
+  console.log('stored files with cid:', cid)
+  return cid
+}
+
+
 
 export default signUpManager;

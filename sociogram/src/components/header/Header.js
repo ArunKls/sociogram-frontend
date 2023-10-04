@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import loginManager from '../managers/loginManager';
 import {
   Navbar,
   Nav,
@@ -13,11 +14,40 @@ import {
 import "./Header.css";
 
 function isLogIn() {
-  return sessionStorage.getItem("user") === null;
+  return sessionStorage.getItem("token") !== null;
 }
 
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(isLogIn());
+  const [username, setUsername] = useState(null);
+  const [password, setPassword] = useState(null);
+
+  const handleUsername = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    var formData = new FormData();
+    const data= {
+      "username":username,
+      "password":password
+    }
+    formData.append("uswername", username);
+    formData.append("password", password);
+    formData.append("grant-type", "password")
+    const response = loginManager(formData)
+    if(response.status === 200){
+        prompt("logged in")
+
+    }else{
+        console.log("login failed")
+    }
+  }
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -60,6 +90,8 @@ function Header() {
                     type="text"
                     placeholder="User ID"
                     className=" mr-sm-2"
+                    name="userid"
+                    onChange={handleUsername}
                   />
                 </Col>
                 <Col xs="auto">
@@ -67,10 +99,12 @@ function Header() {
                     type="password"
                     placeholder="Password"
                     className=" mr-sm-2"
+                    name="password"
+                    onChange={handlePassword}
                   />
                 </Col>
                 <Col xs="auto">
-                  <Button type="submit">Login</Button>
+                  <Button type="submit" onClick={handleSubmit}>Login</Button>
                 </Col>
               </Row>
             </Form>

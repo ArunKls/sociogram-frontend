@@ -32,7 +32,7 @@ const Home=() =>{
             "age":age
         }
         const response = signUpManager(data)
-        if(response.status == 200){
+        if(response.status === 200){
             prompt("created")
 
         }else{

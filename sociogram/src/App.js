@@ -11,7 +11,7 @@ function App() {
       <Header />
       {/* <Home /> */}
       <Routes>
-         <Route path="/login" exact element={<Home />} />
+         <Route path="/signup" exact element={<Home />} />
          <Route path ="/post" exact element ={<Post />} />
       </Routes>
 
