@@ -1,9 +1,9 @@
 import logo from "./logo.svg";
 import "./App.css";
 import Header from "./components/header/Header";
-import { Route, Routes,BrowserRouter as Router } from "react-router-dom";
-import Home from "./components/home/Home"
-import Post from "./components/post/post"
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import Home from "./components/home/Home";
+import Post from "./components/post/post";
 
 function App() {
   return (
@@ -11,14 +11,13 @@ function App() {
       <Header />
       {/* <Home /> */}
       <Routes>
-         <Route path="/signup" exact element={<Home />} />
-         <Route path ="/post" exact element ={<Post />} />
+        <Route path="/signup" exact element={<Home />} />
+        <Route path="/post" exact element={<Post />} />
       </Routes>
 
-        
       {/* <Home /> */}
       {/* <Routes> */}
-     
+
       {/* </Routes> */}
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />

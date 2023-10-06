@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import loginManager from "../managers/loginManager";
+import loginManager from "../../managers/loginManager";
 import { COOKIES } from "../../constants/constants";
 
 import {
