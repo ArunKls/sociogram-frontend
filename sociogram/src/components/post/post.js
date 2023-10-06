@@ -15,7 +15,6 @@ const Post = () => {
   const handleDescription = (e) => {
     setDescription(e.target.value);
   };
-
   const handleFileEvent = (e) => {
     const choosenFiles = Array.prototype.slice.call(e.target.files);
     handleUploads(choosenFiles);
@@ -52,8 +51,8 @@ const Post = () => {
             type="file"
             name="poster"
             onChange={handleFileEvent}
-            value={selectedFiles}
             accept="image/png, image/jpeg"
+            multiple
           />
         </div>
         <button onClick={handleSubmit} className="btn" type="submit">
