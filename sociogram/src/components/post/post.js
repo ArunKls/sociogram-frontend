@@ -19,13 +19,13 @@ const Post = () => {
     const choosenFiles = Array.prototype.slice.call(e.target.files);
     handleUploads(choosenFiles);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
       description: description,
       file: selectedFiles,
     };
-    const response = addPost(data);
+    const response = await addPost(data);
     if (response.status === 200) {
       prompt("created");
     } else {
