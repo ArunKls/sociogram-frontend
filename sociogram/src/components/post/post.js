@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import addPost from "../../managers/postManager";
+import "./post.css"
 
 const Post = () => {
   const [description, setDescription] = useState("");
@@ -36,7 +37,28 @@ const Post = () => {
   };
   return (
     <div>
-      <form>
+        <form onSubmit={handleSubmit}>
+        <div className="custom-textarea-container">
+          <textarea
+            placeholder="Write your post here..."
+            value={description}
+            onChange={handleDescription}
+            className="custom-textarea"
+          />
+          <label className="file-label">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileEvent}
+              className="file-input"
+            />
+            Choose File
+          </label>
+        </div>
+        {/* {image && <img src={image} alt="Uploaded" style={{ maxWidth: '100%', marginTop: '10px' }} />} */}
+        <button type="submit" style={{ marginTop: '10px' }}>Submit</button>
+      </form>
+      {/* <form>
         <div>
           <label>Post</label>
           <input
@@ -54,11 +76,11 @@ const Post = () => {
             accept="image/png, image/jpeg"
             multiple
           />
-        </div>
-        <button onClick={handleSubmit} className="btn" type="submit">
+        </div> */}
+        {/* <button onClick={handleSubmit} className="btn" type="submit">
           Submit
-        </button>
-      </form>
+        </button> */}
+      {/* </form> */}
     </div>
   );
 };

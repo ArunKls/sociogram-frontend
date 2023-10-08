@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import loginManager from "../../managers/loginManager";
 import { COOKIES } from "../../constants/constants";
-
+// import { Navigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Navbar,
   Nav,
@@ -23,6 +25,7 @@ function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(isLogIn());
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
+  const navigate = useNavigate();
 
   const handleUsername = (e) => {
     setUsername(e.target.value);
@@ -46,6 +49,9 @@ function Header() {
       // sessionStorage.setItem("token", token);
       setIsLoggedIn();
       COOKIES.set("access_token", token.access_token);
+      navigate('/profile')
+      console.log("finished")
+
     } else {
       console.log("login failed");
     }
