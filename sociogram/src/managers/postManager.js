@@ -1,10 +1,7 @@
-import { FILE_IO_API_KEY } from "../constants/constants";
+import { FILE_IO_API_KEY, COOKIES, BASE_URL } from "../constants/constants";
 
 const uploadFiles = async (files) => {
-  console.log("FILES", files);
   let uploadLinks = await storeFiles(files);
-  // console.log("UPLOAD LINKS", uploadLinks);
-
   return uploadLinks;
 };
 
@@ -19,61 +16,7 @@ async function storeFiles(files) {
 
     var formdata = new FormData();
     formdata.append("file", file);
-    // formdata.append("expires", expiresTime);
-    // formdata.append("maxDownloads", 50);
-
-    var requestOptions = {
-      method: "POST",
-      // headers: myHeaders,
-      body: formdata,
-      // redirect: "follow",
-    };
-    try {
-      const response = fetch("https://uguu.se/upload.php", requestOptions);
-      console.log("DONE");
-      return response;
-    } catch (error) {
-      console.log("ERROR", error);
-      return { status: 500, message: error.toString() };
-    }
-  });
-
-  const resolved = await Promise.all(responses);
-  const links = [];
-
-  for (const response of resolved) {
-    const data = await response.json();
-
-    console.log("DATA", data);
-    if (data.status === 200) {
-      links.push({
-        name: data.name,
-        type: data.mimeType,
-        key: data.key,
-      });
-    } else {
-      return { status: 500, message: "upload failed" };
-    }
-  }
-
-  // Return the links array
-  // console.log("LINKS", links);
-  return { status: 200, media: links };
-}
-
-async function storeFilesFileIO(files) {
-  const responses = files.map(async (file) => {
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${FILE_IO_API_KEY}`);
-
-    const expiresTime = new Date(
-      new Date().getTime() + 24 * 60 * 60 * 1000
-    ).toISOString();
-
-    var formdata = new FormData();
-    formdata.append("file", file);
     formdata.append("expires", expiresTime);
-    formdata.append("maxDownloads", 50);
 
     var requestOptions = {
       method: "POST",
@@ -83,7 +26,6 @@ async function storeFilesFileIO(files) {
     };
     try {
       const response = fetch("https://file.io/", requestOptions);
-      console.log("DONE");
       return response;
     } catch (error) {
       console.log("ERROR", error);
@@ -97,7 +39,6 @@ async function storeFilesFileIO(files) {
   for (const response of resolved) {
     const data = await response.json();
 
-    console.log("DATA", data);
     if (data.status === 200) {
       links.push({
         name: data.name,
@@ -115,10 +56,30 @@ async function storeFilesFileIO(files) {
 }
 
 const addPost = async (data) => {
-  console.log("DATA", data);
   const files = await uploadFiles(data.file);
   if (files.status != 200) {
     return files;
+  }
+
+  let headers = {
+    Authorization: `Bearer ${COOKIES.get("access_token")}`,
+    "Content-Type": "application/json",
+  };
+
+  let b = { description: data.description, media: files.media };
+
+  let requestOptions = {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(b),
+  };
+
+  let response = await fetch(`${BASE_URL}/post`, requestOptions);
+
+  if (response.status === 200) {
+    alert("Post Added Successfully");
+  } else {
+    alert("Post Couldn't be added");
   }
 
   return files;
