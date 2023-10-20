@@ -34,7 +34,7 @@ function Dashboard() {
           <div key={item.id}>
             <p>{item.description}</p>
             <p>
-              <img src={item.files[0].perma_link} alt="Image" />
+              <img src={'https://sociogram-rutgers.s3.amazonaws.com/'+item.files[0].perma_link} alt={item.files[0].name} />
             </p>
           </div>
         ))
