@@ -2,34 +2,45 @@ import { useState, useEffect } from "react";
 import { DashboardManager } from "../../managers/dashboardManager";
 
 function Dashboard() {
-  console.log("INSIDE DASHBOARD");
   const [dashboard, setDashboard] = useState([]);
+  const [error, setError] = useState(null);
 
-  //   useEffect(() => {
-  //     console.log("INSIDE USE EFFECT");
-  //     const response = DashboardManager();
-  //     if (response.status == 200) {
-  //       setDashboard(response);
-  //     } else {
-  //       alert("error");
-  //     }
-  //   }, []);
+  async function fetchData() {
+    try {
+      const response = await DashboardManager();
+      console.log("RESPONSE", response);
+      if (response.status === 200) {
+        setDashboard(response.posts);
+      } else {
+        setError("Error fetching data");
+      }
+    } catch (error) {
+      console.log("ERROR", error);
+      setError("An error occurred");
+    }
+  }
 
-  DashboardManager().then(function (response) {
-    return (
-      <div>
-        {response.posts.map((item) => (
-          <div>
+  useEffect(() => {
+    console.log("INSIDE USE EFFECT");
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      {error ? (
+        <p>{error}</p>
+      ) : (
+        dashboard.map((item) => (
+          <div key={item.id}>
             <p>{item.description}</p>
             <p>
-              {" "}
-              <img src={item.files[0].perma_link} />
+              <img src={item.files[0].perma_link} alt="Image" />
             </p>
           </div>
-        ))}
-      </div>
-    );
-  });
+        ))
+      )}
+    </div>
+  );
 }
 
-export { Dashboard };
+export default Dashboard;

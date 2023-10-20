@@ -1,9 +1,7 @@
 import { BASE_URL } from "../constants/constants";
-import { useEffect, useState } from "react";
 import { COOKIES } from "../constants/constants";
 
-function DashboardManager() {
-  const [posts, setPosts] = useState([]);
+async function DashboardManager() {
   let headers = {
     Authorization: `Bearer ${COOKIES.get("access_token")}`,
     "Content-Type": "application/json",
@@ -13,16 +11,15 @@ function DashboardManager() {
     headers: headers,
   };
 
-  fetch(`${BASE_URL}/dashboard-posts`, requestOptions)
-    .then((res) => res.json())
-    .then((data) => {
-      console.log("DATA", data);
-      return data;
-    })
-    .catch((err) => {
-      console.log(err.message);
-      return { status: 404 };
-    });
+  try {
+    let response = await fetch(`${BASE_URL}/dashboard-posts`, requestOptions);
+    let data = await response.json();
+    console.log("DATA", data);
+    return data;
+  } catch (error) {
+    console.log("ERROR INSIDE MANAGER", error);
+    return { status: 404 };
+  }
 }
 
 export { DashboardManager };

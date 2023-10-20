@@ -12,7 +12,7 @@ function App() {
       <Header />
       {/* <Home /> */}
       <Routes>
-        <Route path="/profile" exact element={<Profile />}/>
+        <Route path="/profile" exact element={<Profile />} />
         <Route path="/signup" exact element={<Home />} />
         <Route path="/post" exact element={<Post />} />
       </Routes>
