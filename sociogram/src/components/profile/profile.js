@@ -1,18 +1,15 @@
-import Dashboard from "../dashboard/dashboard"
-import Header from "../header/Header"
-import Post from "../post/post"
+import { Dashboard } from "../dashboard/dashboard";
+import Header from "../header/Header";
+import Post from "../post/post";
 
-const Profile = ()=>{
+const Profile = () => {
+  return (
+    <>
+      <Header />
+      <Post />
+      <Dashboard />
+    </>
+  );
+};
 
-
-
-    return (
-        <>
-        <Post />
-        <Dashboard />
-        </>
-
-    )
-}
-
-export default Profile
+export default Profile;

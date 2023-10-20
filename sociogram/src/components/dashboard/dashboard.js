@@ -1,38 +1,35 @@
-import {useState} from "react"
+import { useState, useEffect } from "react";
+import { DashboardManager } from "../../managers/dashboardManager";
 
+function Dashboard() {
+  console.log("INSIDE DASHBOARD");
+  const [dashboard, setDashboard] = useState([]);
 
-const Dashboard=()=>{
-    // const [dashboard,setDashboard] = useState([])
+  //   useEffect(() => {
+  //     console.log("INSIDE USE EFFECT");
+  //     const response = DashboardManager();
+  //     if (response.status == 200) {
+  //       setDashboard(response);
+  //     } else {
+  //       alert("error");
+  //     }
+  //   }, []);
 
-    let dashboard = [
-        {
-            "description":"adhada",
-            "image":"https://s3.amazonaws.com/images.scanbuy/cmpv2/qxYsuUjc45uoiy2EMJp8Bq/images/sun.jpeg"
-        },
-        {
-            "description":"adhada",
-            "image":"https://s3.amazonaws.com/images.scanbuy/cmpv2/qxYsuUjc45uoiy2EMJp8Bq/images/sun.jpeg"
-        }
-
-    ]
-    // const  response = DashboardManager()
-    // if(response.status == 200){
-    //     setDashboard(response)
-    // }else{
-    //     prompt("error");
-    // }
-    return(
-        <div>
-        {dashboard.map(item => (
-            <div> 
-               <p>{item.description}</p>
-              <p> <img src = {item.image} /></p>
-            </div>
-          ))}
+  DashboardManager().then(function (response) {
+    return (
+      <div>
+        {response.posts.map((item) => (
+          <div>
+            <p>{item.description}</p>
+            <p>
+              {" "}
+              <img src={item.files[0].perma_link} />
+            </p>
           </div>
-    )
-
-    
+        ))}
+      </div>
+    );
+  });
 }
 
-export default Dashboard
+export { Dashboard };
