@@ -5,6 +5,7 @@ import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Home from "./components/home/Home";
 import Post from "./components/post/post";
 import Profile from "./components/profile/profile";
+import Signup from "./components/signup/signup";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
       {/* <Home /> */}
       <Routes>
         <Route path="/profile" exact element={<Profile />} />
-        <Route path="/signup" exact element={<Home />} />
+        {/* <Route path="/signup" exact element={<Home />} /> */}
+        <Route path="/signup" exact element={<Signup />} />
         <Route path="/post" exact element={<Post />} />
       </Routes>
 
